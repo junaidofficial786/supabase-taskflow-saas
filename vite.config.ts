@@ -13,12 +13,24 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          query: ['@tanstack/react-query'],
-          ui: ['framer-motion', 'lucide-react'],
-          charts: ['recharts'],
-          supabase: ['@supabase/supabase-js'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router-dom/')) {
+              return 'vendor'
+            }
+            if (id.includes('@tanstack/react-query')) {
+              return 'query'
+            }
+            if (id.includes('framer-motion') || id.includes('lucide-react')) {
+              return 'ui'
+            }
+            if (id.includes('recharts')) {
+              return 'charts'
+            }
+            if (id.includes('@supabase/supabase-js')) {
+              return 'supabase'
+            }
+          }
         },
       },
     },

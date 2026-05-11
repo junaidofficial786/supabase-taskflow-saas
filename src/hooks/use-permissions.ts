@@ -14,7 +14,7 @@ export function usePermissions() {
   }
 
   const isOwner = role === "owner"
-  const isAdmin = role === "admin" || role === "owner"
+  const isAdmin = (role as string) === "admin" || role === "owner"
   const isMember = true
 
   return { role, hasPermission, isOwner, isAdmin, isMember }
